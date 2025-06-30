@@ -31,20 +31,13 @@ const CareerDashboard = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <Header userName="Morning, Ankit" text="Welcome back! Here's your career development overview."/>
-
-        {/* Profile Completion Alert */}
-        {/* <ProfileCompletionAlert 
-          completionPercentage={65}
-          title="Complete Your Profile"
-          description="Your profile is 65% complete. Add missing sections to improve your portfolio."
-        /> */}
         
-        <BarBox title="Complete your portfolio" 
+        <BarBox title="Complete Your Profile" 
         desc="Your profile is 65% complete. Add missing sections to improve your portfolio."
         icon={<AlertTriangle className="text-amber-800 w-5 h-5"/>}
         completionPercentage={65}
-        bgColor="bg-amber-100"
-        borderColor="border-amber-300"/>
+        bgColor="bg-amber-50"
+        borderColor="border-yellow-200"/>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

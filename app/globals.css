@@ -1,7 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+button {
+  @apply cursor-pointer;
+}
+
+
+
 @custom-variant dark (&:is(.dark *));
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -119,4 +127,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} 
