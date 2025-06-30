@@ -1,10 +1,11 @@
 // CareerDashboard.jsx
+"use client"
+
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { AlertTriangle } from "lucide-react";
 // Import all components
 import Header from "./components/Header";
-import ProfileCompletionAlert from "./components/ProfileCompletionAlert";
 import StatsCard from "./components/StatsCard";
 import JobCard from "./components/JobCard";
 import ActivityItem from "./components/ActivityItem";
@@ -12,7 +13,7 @@ import PortfolioItem from "./components/PortfolioItem";
 import ActionButton from "./components/ActionButton";
 import LearningAnalytics from "./components/LearningAnalytics";
 import WellbeingAnalytics from "./components/WellbeingAnalytics";
-
+import BarBox from "./components/BarBox";
 // Import all data
 import {
   statsData,
@@ -26,17 +27,24 @@ import {
 
 const CareerDashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 sm:pt-24 pb-20 sm:pb-6 px-6">
+    <div className="min-h-screen bg-gray-50 sm:pt-10 pb-20 sm:pb-6 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <Header userName="Ankit" />
+        <Header userName="Morning, Ankit" text="Welcome back! Here's your career development overview."/>
 
         {/* Profile Completion Alert */}
-        <ProfileCompletionAlert 
+        {/* <ProfileCompletionAlert 
           completionPercentage={65}
           title="Complete Your Profile"
           description="Your profile is 65% complete. Add missing sections to improve your portfolio."
-        />
+        /> */}
+        
+        <BarBox title="Complete your portfolio" 
+        desc="Your profile is 65% complete. Add missing sections to improve your portfolio."
+        icon={<AlertTriangle className="text-amber-800 w-5 h-5"/>}
+        completionPercentage={65}
+        bgColor="bg-amber-100"
+        borderColor="border-amber-300"/>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

@@ -1,4 +1,3 @@
-// components/LearningAnalytics.jsx
 import React from "react";
 import {
   XAxis,
@@ -11,9 +10,20 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
-const LearningAnalytics = ({ data }) => (
-  <ChartCard 
-    title="Learning Analytics" 
+// Define the expected shape of each data point
+type LearningAnalyticsData = {
+  month: string;
+  difference: number;
+  courses: number;
+};
+
+type LearningAnalyticsProps = {
+  data: LearningAnalyticsData[];
+};
+
+const LearningAnalytics: React.FC<LearningAnalyticsProps> = ({ data }) => (
+  <ChartCard
+    title="Learning Analytics"
     viewAllText="View All"
     onViewAll={() => console.log("View all learning analytics")}
   >
@@ -53,13 +63,14 @@ const LearningAnalytics = ({ data }) => (
         </AreaChart>
       </ResponsiveContainer>
     </div>
+
     <div className="flex items-center justify-center gap-8 mt-4">
       <div className="flex items-center gap-2">
-        <div className="w-4 h-2 border-2 bg-blue-100 border-blue-800 py-2 px-6"></div>
+        <div className="w-4 h-2 border-2 bg-blue-100 border-blue-800" />
         <span className="text-md text-gray-600">Courses Completed</span>
       </div>
       <div className="flex items-center gap-2">
-        <div className="w-4 h-2 border-2 bg-green-100 border-green-800 py-2 px-6"></div>
+        <div className="w-4 h-2 border-2 bg-green-100 border-green-800" />
         <span className="text-md text-gray-600">Study Hours</span>
       </div>
     </div>

@@ -1,13 +1,79 @@
-import Navbar from '../components/Navbar';
+"use client"
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import ProfileCards from "../components/ProfileCards";
+import { Lightbulb } from "lucide-react";
 
-export default function DashboardPage() {
+import BarBox from "../components/BarBox";
+
+export default function Profile() {
   return (
     <>
       <Navbar />
-      <main className="p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Dashboard Page</h1>
-        <p className="text-gray-600">This is your dashboard. Navigation works correctly now!</p>
-      </main>
+      <div className="min-h-screen bg-gray-100 pb-20 sm:pb-6 px-8 pt-6 -mt-12">
+        <div className="max-w-7xl mx-auto">
+          <Header
+            userName="Profile"
+            text="Build your comprehensive professional profile to create an outstanding portfolio."
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-5">
+            <ProfileCards
+              left_text="Basic Details"
+              right_text="Edit"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Education"
+              right_text="Add"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Work Experience"
+              right_text="Add"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Projects"
+              right_text="Add"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Skills"
+              right_text="Edit"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Languages"
+              right_text="Add"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Certifications"
+              right_text="Add"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+            <ProfileCards
+              left_text="Links & Social"
+              right_text="Edit"
+              icon={<Lightbulb className="w-8 h-8" />}
+            />
+          </div>
+          <div className="px-5 pt-2">
+            <BarBox
+              title="Profile Completion"
+              value="0%" 
+              completionPercentage={0} 
+              buttonNames={[
+                "Basic Details",
+                "Education",
+                "Experience",
+                "Certifications",
+              ]}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

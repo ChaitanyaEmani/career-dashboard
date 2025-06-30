@@ -1,15 +1,25 @@
-// components/StatsCard.jsx
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { LucideIcon } from "lucide-react";
 
-const StatsCard = ({ 
-  title, 
-  value, 
-  icon: Icon, 
-  bgColor, 
-  borderColor, 
-  iconColor, 
-  iconBgColor 
+interface StatsCardProps {
+  title: string;
+  value: string | number;
+  icon: LucideIcon; // or React.ComponentType<{ className?: string }>
+  bgColor?: string;
+  borderColor?: string;
+  iconColor?: string;
+  iconBgColor?: string;
+}
+
+const StatsCard: React.FC<StatsCardProps> = ({
+  title,
+  value,
+  icon: Icon,
+  bgColor = "bg-white",
+  borderColor = "border-gray-200",
+  iconColor = "text-white",
+  iconBgColor = "bg-emerald-500",
 }) => (
   <Card className={`${bgColor} ${borderColor}`}>
     <CardContent className="p-6">
