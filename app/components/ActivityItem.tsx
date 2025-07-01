@@ -3,7 +3,7 @@ import React from "react";
 type ActivityItemProps = {
   title: string;
   time: string;
-  color?: "blue" | "green" | "purple" | "orange" | "gray";
+  color?: "blue" | "green" | "purple" | "orange" | "gray" | "red";
 };
 
 const ActivityItem: React.FC<ActivityItemProps> = ({
@@ -20,13 +20,15 @@ const ActivityItem: React.FC<ActivityItemProps> = ({
       ? "bg-purple-500"
       : color === "orange"
       ? "bg-orange-500"
+      : color === "red"
+      ? "bg-red-500"
       : "bg-gray-500";
 
   return (
     <div className="flex items-start space-x-3">
       <div className={`w-2 h-2 rounded-full mt-2 ${dotColorClass}`} />
       <div className="flex-1">
-        <p className="text-sm font-medium text-gray-900">{title}</p>
+        <p className="text-sm font-medium text-gray-700">{title}</p>
         <p className="text-xs text-gray-500 mt-1">{time}</p>
       </div>
     </div>

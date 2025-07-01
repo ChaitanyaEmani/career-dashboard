@@ -2,6 +2,12 @@
 
 import React, { useState } from "react";
 
+interface TabNavigationProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+
 const tabs: string[] = [
   "Profile View",
   "Education",
@@ -12,8 +18,8 @@ const tabs: string[] = [
   "Links",
 ];
 
-const TabNavigation: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("Profile View");
+const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab }) => {
+
 
   return (
     <div className="bg-white rounded-lg w-full overflow-x-auto">

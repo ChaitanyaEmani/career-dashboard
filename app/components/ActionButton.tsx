@@ -8,7 +8,7 @@ type ActionButtonProps = {
   bgColor?: string;
   borderColor?: string;
   textColor?: string;
-  onClick?: () => void;
+
 };
 
 const ActionButton: React.FC<ActionButtonProps> = ({
@@ -17,12 +17,12 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   bgColor = "",
   borderColor = "",
   textColor = "",
-  onClick,
+ 
 }) => (
   <Button
     className={`w-full justify-start border font-medium ${bgColor} ${borderColor} ${textColor}`}
     variant="outline"
-    onClick={onClick}
+    
   >
     <Icon className="w-4 h-4 mr-2" />
     {text}

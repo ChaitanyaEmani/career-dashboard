@@ -22,11 +22,11 @@ const ChartCard: React.FC<ChartCardProps> = ({
 }) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between">
-      <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+      <CardTitle className="text-md font-semibold">{title}</CardTitle>
       {viewAllText && (
         <Button
           variant="link"
-          className="text-blue-600 text-sm p-0"
+          className="text-blue-600 text-xs p-0"
           onClick={onViewAll}
         >
           {viewAllText}

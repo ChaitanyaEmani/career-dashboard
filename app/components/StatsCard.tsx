@@ -1,37 +1,26 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import React from 'react';
 import { LucideIcon } from "lucide-react";
 
 interface StatsCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon; // or React.ComponentType<{ className?: string }>
-  bgColor?: string;
-  borderColor?: string;
-  iconColor?: string;
-  iconBgColor?: string;
+  icon: LucideIcon;
+  bgColor?: string;         
+  textColor?:string;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({
-  title,
-  value,
-  icon: Icon,
-  bgColor = "bg-white",
-  borderColor = "border-gray-200",
-  iconColor = "text-white",
-  iconBgColor = "bg-emerald-500",
-}) => (
-  <Card className={`${bgColor} ${borderColor}`}>
-    <CardContent className="p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-600 mb-1">{title}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-        </div>
-        <Icon className={`h-9 w-10 ${iconColor} ${iconBgColor} p-1 rounded`} />
+const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon: Icon, bgColor, textColor}) => {
+  return (
+    <div className="flex justify-between items-center py-3.5 px-3 border-1 bg-white rounded-lg">
+      <div className='flex flex-col'>
+        <p className="text-gray-600 font-medium text-md">{title}</p>
+        <p className="text-xl font-bold text-gray-900">{value}</p>
       </div>
-    </CardContent>
-  </Card>
-);
+      <div className="">
+        <Icon size={20} className={`w-9 h-9 p-1.5 ${bgColor} ${textColor} rounded-sm`} />
+      </div>
+    </div>
+  );
+};
 
 export default StatsCard;

@@ -34,14 +34,14 @@ const BarBox: React.FC<BarBoxProps> = ({
           <div className="flex items-start justify-center gap-3">
             <div className="text-xl">{icon}</div>
             <div className="flex flex-col w-full">
-              <h2 className="text-lg font-semibold text-amber-700">{title}</h2>
-              {desc && <p className="text-base text-amber-600">{desc}</p>}
+              <h2 className="text-lg font-semibold text-amber-800">{title}</h2>
+              {desc && <p className="text-base text-amber-700">{desc}</p>}
 
               {/* Progress Bar */}
               <div className="mt-2 pr-6">
                 <div className="h-2 rounded bg-yellow-200 w-full max-w-[95%]">
                   <div
-                    className="h-full bg-amber-600 rounded transition-all duration-500"
+                    className="h-full bg-amber-800 rounded transition-all duration-500"
                     style={{ width: `${completionPercentage}%` }}
                   />
                 </div>

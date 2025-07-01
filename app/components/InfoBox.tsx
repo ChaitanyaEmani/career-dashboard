@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import UploadResume from "./UploadResume";
+import { LucideIcon } from "lucide-react";
 
-type InfoBoxProps = {
+interface InfoBoxProps {
   title: string;
   subtitle?: string;
   btn1: string;
   btn2?: string;
-  icon?: React.ReactNode;
-};
+  icon: LucideIcon;
+}
 
 const InfoBox: React.FC<InfoBoxProps> = ({
-  icon,
-  title,
-  subtitle,
   btn1,
   btn2,
+  subtitle,
+  title,
+  icon: Icon,
+ 
 }) => {
   const [showUpload, setShowUpload] = useState(false);
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between gap-4 bg-white rounded-lg p-4 w-full">
+      <div className="flex flex-col md:flex-row justify-between gap-4 bg-white rounded-lg p-4 w-full">
         {/* Left section */}
         <div className="flex flex-col gap-2">
           <p className="text-lg font-semibold text-gray-800">{title}</p>
@@ -28,20 +30,14 @@ const InfoBox: React.FC<InfoBoxProps> = ({
         </div>
 
         {/* Right buttons */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-          {icon ? (
-            <button
-              onClick={() => setShowUpload(true)}
-              className="bg-green-800 text-white flex gap-1.5 text-base h-10 px-4 items-center justify-center rounded-lg"
-            >
-              {icon}
-              {btn1}
-            </button>
-          ) : (
-            <button className="bg-gray-100 hover:bg-gray-200 text-sm px-4 py-2 rounded">
-              {btn1}
-            </button>
-          )}
+        <div className="flex flex-col sm:flex-row  gap-2 sm:items-center">
+          <button
+            onClick={() => setShowUpload(true)}
+            className="bg-green-800 text-white flex gap-1.5 text-base h-10 px-4 items-center justify-center rounded-lg"
+          >
+            <Icon className="w-4 h-4" />
+            {btn1}
+          </button>
 
           {btn2 && (
             <button className="bg-gray-900 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded">

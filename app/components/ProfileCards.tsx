@@ -1,31 +1,33 @@
 import React from "react";
+import { LucideIcon } from "lucide-react";
 
 interface ProfileCardsProps {
   left_text: string;
   right_text: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
+  text: string;
+  btnText: string;
 }
 
 const ProfileCards: React.FC<ProfileCardsProps> = ({
   left_text,
   right_text,
-  icon,
-}) => {
-  const capitalizedText =
-    left_text.charAt(0).toUpperCase() + left_text.slice(1).toLowerCase();
+  icon:Icon,
+  text,
+  btnText,
 
+}) => {
+  
   return (
-    <div className="flex flex-col gap-6 max-w-[550px] min-h-[250px] bg-white rounded-lg p-4 pb-12">
-      <div className="flex justify-between pb-4">
-        <p className="text-black text-base font-medium">{capitalizedText}</p>
-        <p className="text-green-600 text-xs">{right_text}</p>
+    <div className="flex flex-col p-4 border-1 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <p className="text-gray-800 text-md font-semibold">{left_text}</p>
+        <p className="text-green-800">{right_text}</p>
       </div>
-      <div className="flex flex-col gap-2 text-center items-center">
-        <div className="text-gray-400">{icon}</div>
-        <p className="text-gray-500 text-xs">No {left_text.toLowerCase()} added yet</p>
-        <button className="bg-green-800 px-3 py-1.5 text-sm text-white rounded-sm mt-1">
-          Add {capitalizedText}
-        </button>
+      <div className="flex flex-col gap-3 items-center py-14">
+        <Icon size={20} className="text-gray-500"/>
+        <p className="text-gray-500">No {text} added yet</p>
+        <button className="px-3 py-1 bg-green-800 text-white rounded-sm" >Add {btnText}</button>
       </div>
     </div>
   );
