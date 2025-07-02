@@ -22,11 +22,55 @@ import TabNavigation from "../components/TabNavigation";
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("Profile View");
   const [openForm, setOpenForm] = useState<string | null>(null);
+   // New state to hold profile data
+
+   interface ProfileDataType {
+  basicDetails: any;
+  education: any[];
+  experience: any[];
+  projects: any[];
+  skills: any[];
+  languages: any[];
+  certifications: any[];
+  links: any[];
+}
+
+  const [profileData, setProfileData] = useState<ProfileDataType>({
+    basicDetails: null,
+    education: [],
+    experience: [],
+    projects: [],
+    skills: [],
+    languages: [],
+    certifications: [],
+    links: []
+  });
 
   // Form submission handlers
-  const handleFormSubmit = (formType: string, data: any) => {
-    console.log(`${formType} data:`, data);
-    // Here you would typically save the data to your state management or API
+   const handleFormSubmit = (formType: string, data: any) => {
+    setProfileData((prev) => {
+      switch (formType) {
+        case "basicDetails":
+          return { ...prev, basicDetails: data };
+        case "education":
+          return { ...prev, education: [...prev.education, data] };
+        case "experience":
+          return { ...prev, experience: [...prev.experience, data] };
+        case "projects":
+          return { ...prev, projects: [...prev.projects, data] };
+        case "skills":
+          return { ...prev, skills: [...prev.skills, data] };
+        case "languages":
+          return { ...prev, languages: [...prev.languages, data] };
+        case "certifications":
+          return { ...prev, certifications: [...prev.certifications, data] };
+        case "links":
+          return { ...prev, links: [...prev.links, data] };
+        default:
+          return prev;
+      }
+    });
+
     setOpenForm(null);
   };
 
@@ -54,7 +98,7 @@ export default function Profile() {
             text="Build your comprehensive professional profile to create an outstanding portfolio."
           />
 
-          <div className="px-2.5 py-3 border-1 bg-white rounded-lg mb-8">
+          <div className="px-2.5 py-3 border bg-white rounded-lg mb-8">
             <InfoBox 
               title="Quick Start" 
               subtitle="Upload your existing resume (PDF/DOCX) and let AI auto-fill your profile fields." 
@@ -63,7 +107,7 @@ export default function Profile() {
             />
           </div>
           
-          <div className="px-4 border-1 bg-white rounded-lg mb-8">
+          <div className="px-4 border bg-white rounded-lg mb-8">
             <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
 
@@ -77,6 +121,7 @@ export default function Profile() {
                   text="basic details" 
                   btnText="Basic details" 
                   onAddClick={openBasicDetailsForm}
+                  data={profileData.basicDetails}
                 />
                 <ProfileCards 
                   left_text="Education" 
@@ -85,6 +130,7 @@ export default function Profile() {
                   text="education" 
                   btnText="Education" 
                   onAddClick={openEducationForm}
+                  data={profileData.education}
                 />
                 <ProfileCards 
                   left_text="Work Experience" 
@@ -93,6 +139,7 @@ export default function Profile() {
                   text="work experience" 
                   btnText="Experience" 
                   onAddClick={openExperienceForm}
+                  data={profileData.experience}
                 />
                 <ProfileCards 
                   left_text="Projects" 
@@ -101,6 +148,7 @@ export default function Profile() {
                   text="projects" 
                   btnText="Projects" 
                   onAddClick={openProjectsForm}
+                  data={profileData.projects}
                 />
                 <ProfileCards 
                   left_text="Skills" 
@@ -109,6 +157,7 @@ export default function Profile() {
                   text="skills" 
                   btnText="Skills" 
                   onAddClick={openSkillsForm}
+                  data={profileData.skills}
                 />
                 <ProfileCards 
                   left_text="Languages" 
@@ -117,6 +166,7 @@ export default function Profile() {
                   text="languages" 
                   btnText="Languages" 
                   onAddClick={openLanguagesForm}
+                  data={profileData.languages}
                 />
                 <ProfileCards 
                   left_text="Certifications" 
@@ -125,6 +175,7 @@ export default function Profile() {
                   text="certifications" 
                   btnText="Certificates" 
                   onAddClick={openCertificationsForm}
+                  data={profileData.certifications}
                 />
                 <ProfileCards 
                   left_text="Links & Social" 
@@ -133,6 +184,7 @@ export default function Profile() {
                   text="links" 
                   btnText="Links" 
                   onAddClick={openLinksForm}
+                  data={profileData.links}
                 />
               </>
             )}
@@ -145,6 +197,7 @@ export default function Profile() {
                 text="education" 
                 btnText="Education" 
                 onAddClick={openEducationForm}
+                data={profileData.education}
               />
             )}
 
@@ -156,6 +209,7 @@ export default function Profile() {
                 text="work experience" 
                 btnText="Experience" 
                 onAddClick={openExperienceForm}
+                data={profileData.experience}
               />
             )}
 
@@ -167,6 +221,7 @@ export default function Profile() {
                 text="projects" 
                 btnText="Projects" 
                 onAddClick={openProjectsForm}
+                data={profileData.projects}
               />
             )}
 
@@ -178,6 +233,7 @@ export default function Profile() {
                 text="languages" 
                 btnText="Languages" 
                 onAddClick={openLanguagesForm}
+                data={profileData.languages}
               />
             )}
 
@@ -189,6 +245,7 @@ export default function Profile() {
                 text="certifications" 
                 btnText="Certificates" 
                 onAddClick={openCertificationsForm}
+                data={profileData.certifications}
               />
             )}
 
@@ -200,11 +257,12 @@ export default function Profile() {
                 text="links" 
                 btnText="Links" 
                 onAddClick={openLinksForm}
+                data={profileData.links}
               />
             )}
           </div>
 
-          <div className="border-1 bg-white rounded-lg">
+          <div className="border bg-white rounded-lg">
             <BarBox
               title="Profile Completion"
               value="0%"
@@ -227,7 +285,7 @@ export default function Profile() {
         title="Add Basic Details"
       >
         <BasicDetailsForm
-          onSubmit={(data) => handleFormSubmit("Basic Details", data)}
+          onSubmit={(data) => handleFormSubmit("basicDetails", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -238,7 +296,7 @@ export default function Profile() {
         title="Add Education"
       >
         <EducationForm
-          onSubmit={(data) => handleFormSubmit("Education", data)}
+          onSubmit={(data) => handleFormSubmit("education", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -249,7 +307,7 @@ export default function Profile() {
         title="Add Work Experience"
       >
         <ExperienceForm
-          onSubmit={(data) => handleFormSubmit("Experience", data)}
+          onSubmit={(data) => handleFormSubmit("experience", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -260,7 +318,7 @@ export default function Profile() {
         title="Add Project"
       >
         <ProjectsForm
-          onSubmit={(data) => handleFormSubmit("Projects", data)}
+          onSubmit={(data) => handleFormSubmit("projects", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -271,7 +329,7 @@ export default function Profile() {
         title="Add Skill"
       >
         <SkillsForm
-          onSubmit={(data) => handleFormSubmit("Skills", data)}
+          onSubmit={(data) => handleFormSubmit("skills", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -282,7 +340,7 @@ export default function Profile() {
         title="Add Language"
       >
         <LanguagesForm
-          onSubmit={(data) => handleFormSubmit("Languages", data)}
+          onSubmit={(data) => handleFormSubmit("languages", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -293,7 +351,7 @@ export default function Profile() {
         title="Add Certification"
       >
         <CertificationsForm
-          onSubmit={(data) => handleFormSubmit("Certifications", data)}
+          onSubmit={(data) => handleFormSubmit("certifications", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>
@@ -304,7 +362,7 @@ export default function Profile() {
         title="Add Link"
       >
         <LinksForm
-          onSubmit={(data) => handleFormSubmit("Links", data)}
+          onSubmit={(data) => handleFormSubmit("links", data)}
           onCancel={handleFormCancel}
         />
       </FormModal>

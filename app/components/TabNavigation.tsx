@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-
 interface TabNavigationProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;

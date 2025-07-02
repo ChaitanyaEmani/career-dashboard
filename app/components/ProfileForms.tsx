@@ -49,7 +49,6 @@ interface SkillData {
 interface LanguageData {
   language: string;
   proficiency: string;
-  nativeLanguage: boolean;
 }
 
 interface CertificationData {
@@ -86,17 +85,19 @@ const validateRequired = (data: Record<string, any>, requiredFields: string[]): 
 export const BasicDetailsForm: React.FC<FormProps<BasicDetailsData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<BasicDetailsData>
+
 }) => {
   const [formData, setFormData] = useState<BasicDetailsData>({
-    firstName: "",
-    lastName: "",
-    professionalTitle: "",
-    location: "",
-    phone: "",
-    bio: "",
-    ...initialData
-  });
+ 
+  firstName: initialData.firstName ?? "",
+  lastName: initialData.lastName ?? "",
+  professionalTitle: initialData.professionalTitle ?? "",
+  location: initialData.location ?? "",
+  phone: initialData.phone ?? "",
+  bio: initialData.bio ?? ""
+});
+
 
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -195,16 +196,17 @@ export const BasicDetailsForm: React.FC<FormProps<BasicDetailsData>> = ({
 export const EducationForm: React.FC<FormProps<EducationData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<EducationData>
+
 }) => {
   const [formData, setFormData] = useState<EducationData>({
-    institution: "",
-    degree: "",
-    fieldOfStudy: "",
-    grade: "",
-    startDate: "",
-    endDate: "",
-    ...initialData
+   
+    institution: initialData.institution ?? "",
+    degree: initialData.degree ?? "",
+    fieldOfStudy: initialData.fieldOfStudy ?? "",
+    grade: initialData.grade ?? "",
+    startDate: initialData.startDate ?? "",
+    endDate: initialData.endDate ?? "",
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -306,18 +308,19 @@ export const EducationForm: React.FC<FormProps<EducationData>> = ({
 export const ExperienceForm: React.FC<FormProps<ExperienceData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<ExperienceData>
+
 }) => {
   const [formData, setFormData] = useState<ExperienceData>({
-    jobTitle: "",
-    company: "",
-    startDate: "",
-    endDate: "",
-    situation: "",
-    task: "",
-    action: "",
-    result: "",
-    ...initialData
+   
+    jobTitle: initialData.jobTitle ?? "",
+    company: initialData.company ?? "",
+    startDate: initialData.startDate ?? "",
+    endDate: initialData.endDate ?? "",
+    situation: initialData.situation ?? "",
+    task: initialData.task ?? "",
+    action: initialData.action ?? "",
+    result: initialData.result ?? ""
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -433,15 +436,17 @@ export const ExperienceForm: React.FC<FormProps<ExperienceData>> = ({
 export const ProjectsForm: React.FC<FormProps<ProjectData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<ProjectData>
+
 }) => {
   const [formData, setFormData] = useState<ProjectData>({
-    name: "",
-    description: "",
-    technologies: "",
-    projectUrl: "",
-    githubUrl: "",
-    ...initialData
+   
+    name: initialData.name||"",
+    description: initialData.description ?? "",
+    technologies: initialData.technologies ?? "",
+    projectUrl: initialData.projectUrl ?? "",
+    githubUrl: initialData.githubUrl ?? "",
+    
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -531,14 +536,16 @@ export const ProjectsForm: React.FC<FormProps<ProjectData>> = ({
 export const SkillsForm: React.FC<FormProps<SkillData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<SkillData>
+
 }) => {
   const [formData, setFormData] = useState<SkillData>({
-    skillName: "",
-    proficiency: "",
-    category: "",
-    yearsOfExperience: "",
-    ...initialData
+   
+    skillName: initialData.skillName ?? "",
+    proficiency: initialData.proficiency ?? "",
+    category: initialData.category ?? "",
+    yearsOfExperience: initialData.yearsOfExperience ?? "",
+   
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -638,13 +645,14 @@ export const SkillsForm: React.FC<FormProps<SkillData>> = ({
 export const LanguagesForm: React.FC<FormProps<LanguageData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<LanguageData>
+
 }) => {
   const [formData, setFormData] = useState<LanguageData>({
-    language: "",
-    proficiency: "",
-    nativeLanguage: false,
-    ...initialData
+   
+    language: initialData.language ?? "",
+    proficiency: initialData.proficiency ?? ""
+   
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -663,17 +671,11 @@ export const LanguagesForm: React.FC<FormProps<LanguageData>> = ({
   };
 
   // Fixed: Added proper checkbox handling
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    
-    if (type === 'checkbox') {
-      setFormData({ ...formData, [name]: (e.target as HTMLInputElement).checked });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     if (errors.length > 0) setErrors([]);
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -712,19 +714,7 @@ export const LanguagesForm: React.FC<FormProps<LanguageData>> = ({
           <option value="Full Professional">Full Professional</option>
           <option value="Native">Native</option>
         </select>
-      </div>
-
-      {/*Added the missing native language checkbox */}
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          name="nativeLanguage"
-          checked={formData.nativeLanguage}
-          onChange={handleChange}
-          className="rounded border-gray-300"
-        />
-        <label className="text-sm text-gray-700">This is my native language</label>
-      </div>
+      </div>  
 
       <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-3">
         <Button text="Cancel" onClick={onCancel} type="button" />
@@ -737,15 +727,16 @@ export const LanguagesForm: React.FC<FormProps<LanguageData>> = ({
 export const CertificationsForm: React.FC<FormProps<CertificationData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<CertificationData>
+
 }) => {
   const [formData, setFormData] = useState<CertificationData>({
-    name: "",
-    issuer: "",
-    issueDate: "",
-    abstract: "",
-    doiUrl: "",
-    ...initialData
+   
+    name: initialData.name ?? "",
+    issuer: initialData.issuer ?? "",
+    issueDate: initialData.issueDate ?? "",
+    abstract: initialData.abstract ?? "",
+    doiUrl: initialData.doiUrl ?? "",
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -833,12 +824,14 @@ export const CertificationsForm: React.FC<FormProps<CertificationData>> = ({
 export const LinksForm: React.FC<FormProps<LinkData>> = ({ 
   onSubmit, 
   onCancel, 
-  initialData = {} 
+  initialData = {} as Partial<LinkData>
+
 }) => {
   const [formData, setFormData] = useState<LinkData>({
-    platform: "",
-    url: "",
-    ...initialData
+   
+    platform: initialData.platform ??"",
+    url: initialData.url ?? "",
+   
   });
 
   const [errors, setErrors] = useState<string[]>([]);

@@ -1,6 +1,6 @@
 import Sidebar from '../components/Sidebar';
 
-export default function DashboardPage() {
+export default function Opportunities() {
   return (
     <>
       <Sidebar />
