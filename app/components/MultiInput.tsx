@@ -1,86 +1,128 @@
-import React,{useState} from "react";
-
+import React, { useState } from "react";
 import { Calendar } from "lucide-react";
 
 interface InputCardProps {
-    title: string;
-    placeholderName: string;
+  type: string;
+  title:string;
+  placeholderName: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputCard: React.FC<InputCardProps> =({title, placeholderName})=>{
-    return (
-        <div className="flex flex-col gap-3">
-            <p className="text-sm">{title}</p>
-            <input type="text" className="p-3 text-gray-500 text-md" placeholder={placeholderName} />
-        </div>
-    )
-}
-
-interface DateCardProps {
-    title: string;
-    
-}
-
-export const DateCard: React.FC<DateCardProps> = ({title})=>{
-    return (
-        <div className="flex flex-col gap-3">
-            <p>{title}</p>
-            <div className="border-1 bg-white rounded-lg p-3">
-                <p className="text-sm font-semibold">dd-mm-yyyy</p>
-                <Calendar size={20} className="font=bold"/>
-            </div>
-        </div>
-    )
-}
-
-
-interface DescCardProps {
-  title: string;
-  desc: string;
-}
-
-export const DescCard: React.FC<DescCardProps> = ({ title, desc }) => {
-  const [value, setValue] = useState("");
-
+export const InputCard: React.FC<InputCardProps> = ({
+  type,
+  placeholderName,
+  name,
+  value,
+  onChange,
+  title
+}) => {
   return (
-    <div className="p-4 border rounded-md bg-white w-full">
-      <p className="mb-2 font-semibold text-gray-800">{title}</p>
-      <textarea
-        placeholder={desc}
+    <div className="flex flex-col gap-1.5">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        {title}
+      </label>
+      <input
+        type={type}
+        name={name}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        rows={1}            // start with 1 line
-        maxLength={1000}    // optional: limit characters
-        className="resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
-        style={{
-          minHeight: "2.5rem",         // ~1 line
-          maxHeight: "10.5rem",        // ~5 lines
-          overflowY: "auto",
-        }}
+        onChange={onChange}
+        className="p-1.5 border text-xs border-gray-300 rounded-md w-full min-w-[180px]"
+        placeholder={placeholderName}
+        required
       />
     </div>
   );
 };
 
-
-interface ButtonProps{
-  text: string;
+interface DateCardProps {
+  placeholderName: string;
+  name: string;
+  value: string;
+  title:string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-// Buttons.tsx
-export const Button: React.FC<ButtonProps> = ({ text }) => {
+
+export const DateCard: React.FC<DateCardProps> = ({
+  name,
+  value,
+  onChange,
+  placeholderName,
+  title
+}) => {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        {title}
+      </label>
+      <input
+        type="date"
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="w-full p-1.5 text-xs border border-gray-300 rounded-md min-w-[180px]"
+        placeholder={placeholderName}
+        required
+      />
+    </div>
+  );
+};
+
+interface DescCardProps {
+  title:string;
+  placeholderName: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+export const DescCard: React.FC<DescCardProps> = ({
+  name,
+  value,
+  onChange,
+  placeholderName,
+  title
+}) => {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="block text-xs font-medium text-gray-700 mb-1">
+        {title}
+      </label>
+      <textarea
+        name={name}
+        value={value}
+        onChange={onChange}
+        rows={3}
+        className="w-full text-xs p-1.5 border border-gray-300 rounded-md"
+        placeholder={placeholderName}
+
+        required
+      />
+    </div>
+  );
+};
+
+interface ButtonProps {
+  text: string;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+}
+
+export const Button: React.FC<ButtonProps> = ({ text, onClick, type = "button" }) => {
   const isCancel = text.toLowerCase() === "cancel";
 
   return (
     <button
-      
-      className={`px-4 py-2 rounded-md ${
+      type={type}
+      onClick={onClick}
+      className={`px-4 w-full min-w-[180px] py-2 rounded-md ${
         isCancel
           ? "bg-white text-black border border-gray-300"
           : "bg-green-800 text-white"
       }`}
     >
-      {text}
+     {text}
     </button>
   );
 };
-

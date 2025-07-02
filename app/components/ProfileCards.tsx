@@ -7,15 +7,16 @@ interface ProfileCardsProps {
   icon: LucideIcon;
   text: string;
   btnText: string;
+  onAddClick: () => void; // New prop for handling click
 }
 
 const ProfileCards: React.FC<ProfileCardsProps> = ({
   left_text,
   right_text,
-  icon:Icon,
+  icon: Icon,
   text,
   btnText,
-
+  onAddClick, // New prop
 }) => {
   
   return (
@@ -27,7 +28,12 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
       <div className="flex flex-col gap-3 items-center py-14">
         <Icon size={20} className="text-gray-500"/>
         <p className="text-gray-500">No {text} added yet</p>
-        <button className="px-3 py-1 bg-green-800 text-white rounded-sm" >Add {btnText}</button>
+        <button 
+          className="px-3 py-1 bg-green-800 text-white rounded-sm hover:bg-green-900 transition-colors" 
+          onClick={onAddClick}
+        >
+          Add {btnText}
+        </button>
       </div>
     </div>
   );
