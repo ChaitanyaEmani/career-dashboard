@@ -72,15 +72,24 @@ interface FormProps<T> {
 }
 
 // Basic validation function
-const validateRequired = (data: Record<string, any>, requiredFields: string[]): string[] => {
+const validateRequired = <T extends object>(data: T, requiredFields: (keyof T)[]): string[] => {
   const errors: string[] = [];
-  requiredFields.forEach(field => {
-    if (!data[field] || (typeof data[field] === 'string' && data[field].trim() === '')) {
-      errors.push(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+
+  requiredFields.forEach((field) => {
+    const value = data[field];
+    if (
+      value === undefined ||
+      value === null ||
+      (typeof value === 'string' && value.trim() === '')
+    ) {
+      errors.push(`${String(field)} is required`);
     }
   });
+
   return errors;
 };
+
+
 
 export const BasicDetailsForm: React.FC<FormProps<BasicDetailsData>> = ({ 
   onSubmit, 

@@ -19,12 +19,7 @@ import BarBox from "../components/BarBox";
 import InfoBox from "../components/InfoBox";
 import TabNavigation from "../components/TabNavigation";
 
-export default function Profile() {
-  const [activeTab, setActiveTab] = useState("Profile View");
-  const [openForm, setOpenForm] = useState<string | null>(null);
-   // New state to hold profile data
-
-   interface ProfileDataType {
+  interface ProfileDataType {
   basicDetails: any;
   education: any[];
   experience: any[];
@@ -34,6 +29,13 @@ export default function Profile() {
   certifications: any[];
   links: any[];
 }
+
+export default function Profile() {
+  const [activeTab, setActiveTab] = useState("Profile View");
+  const [openForm, setOpenForm] = useState<string | null>(null);
+   // New state to hold profile data
+
+ 
 
   const [profileData, setProfileData] = useState<ProfileDataType>({
     basicDetails: null,
