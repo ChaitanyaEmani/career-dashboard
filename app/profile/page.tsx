@@ -1,73 +1,174 @@
 "use client";
+
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import ProfileCards from "../components/ProfileCards";
 import FormModal from "../components/FormModal";
-import { 
-  BasicDetailsForm, 
-  EducationForm, 
-  ExperienceForm, 
-  ProjectsForm, 
-  SkillsForm, 
-  LanguagesForm, 
-  CertificationsForm, 
-  LinksForm 
+import {
+  BasicDetailsForm,
+  EducationForm,
+  ExperienceForm,
+  ProjectsForm,
+  SkillsForm,
+  LanguagesForm,
+  CertificationsForm,
+  LinksForm,
 } from "../components/ProfileForms";
-import { Briefcase, CloudUpload, Lightbulb, Languages, Link2, FileBadge, Code2 } from "lucide-react";
+import {
+  Briefcase,
+  CloudUpload,
+  Lightbulb,
+  Languages,
+  Link2,
+  FileBadge,
+  Code2,
+} from "lucide-react";
 import BarBox from "../components/BarBox";
 import InfoBox from "../components/InfoBox";
 import TabNavigation from "../components/TabNavigation";
 
-  interface ProfileDataType {
-  basicDetails: any;
-  education: any[];
-  experience: any[];
-  projects: any[];
-  skills: any[];
-  languages: any[];
-  certifications: any[];
-  links: any[];
+// ---------- Types ----------
+
+type FormType =
+  | "basicDetails"
+  | "education"
+  | "experience"
+  | "projects"
+  | "skills"
+  | "languages"
+  | "certifications"
+  | "links";
+
+interface BasicDetails {
+  firstName: string;
+  lastName: string;
+  professionalTitle: string;
+  location: string;
+  phone: string;
+  bio: string;
 }
+
+interface Education {
+  institution: string;
+  degree: string;
+  fieldOfStudy: string;
+  grade: string;
+  startDate: string;
+  endDate: string;
+}
+
+interface Experience {
+  jobTitle: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  situation: string;
+  task: string;
+  action: string;
+  result: string;
+}
+
+interface Project {
+  name: string;
+  description: string;
+  technologies: string;
+  projectUrl: string;
+  githubUrl: string;
+}
+
+interface Skill {
+  skillName: string;
+  proficiency: string;
+  category: string;
+  yearsOfExperience: string;
+}
+
+interface Language {
+  language: string;
+  proficiency: string;
+}
+
+interface Certification {
+  name: string;
+  issuer: string;
+  issueDate: string;
+  abstract: string;
+  doiUrl: string;
+}
+
+interface Link {
+  platform: string;
+  url: string;
+}
+
+
+type FormDataType =
+  | BasicDetails
+  | Education
+  | Experience
+  | Project
+  | Skill
+  | Language
+  | Certification
+  | Link;
+
+interface ProfileDataType {
+  basicDetails?: BasicDetails;
+  education: Education[];
+  experience: Experience[];
+  projects: Project[];
+  skills: Skill[];
+  languages: Language[];
+  certifications: Certification[];
+  links: Link[];
+}
+
+// ---------- Component ----------
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("Profile View");
-  const [openForm, setOpenForm] = useState<string | null>(null);
-   // New state to hold profile data
-
- 
+  const [openForm, setOpenForm] = useState<FormType | null>(null);
 
   const [profileData, setProfileData] = useState<ProfileDataType>({
-    basicDetails: null,
+    basicDetails: undefined,
     education: [],
     experience: [],
     projects: [],
     skills: [],
     languages: [],
     certifications: [],
-    links: []
+    links: [],
   });
 
-  // Form submission handlers
-   const handleFormSubmit = (formType: string, data: any) => {
+  const handleFormSubmit = (formType: FormType, data: FormDataType) => {
     setProfileData((prev) => {
       switch (formType) {
         case "basicDetails":
-          return { ...prev, basicDetails: data };
+          return { ...prev, basicDetails: data as BasicDetails };
         case "education":
-          return { ...prev, education: [...prev.education, data] };
+          return { ...prev, education: [...prev.education, data as Education] };
         case "experience":
-          return { ...prev, experience: [...prev.experience, data] };
+          return {
+            ...prev,
+            experience: [...prev.experience, data as Experience],
+          };
         case "projects":
-          return { ...prev, projects: [...prev.projects, data] };
+          return { ...prev, projects: [...prev.projects, data as Project] };
         case "skills":
-          return { ...prev, skills: [...prev.skills, data] };
+          return { ...prev, skills: [...prev.skills, data as Skill] };
         case "languages":
-          return { ...prev, languages: [...prev.languages, data] };
+          return {
+            ...prev,
+            languages: [...prev.languages, data as Language],
+          };
         case "certifications":
-          return { ...prev, certifications: [...prev.certifications, data] };
+          return {
+            ...prev,
+            certifications: [...prev.certifications, data as Certification],
+          };
         case "links":
-          return { ...prev, links: [...prev.links, data] };
+          return { ...prev, links: [...prev.links, data as Link] };
         default:
           return prev;
       }
@@ -101,14 +202,14 @@ export default function Profile() {
           />
 
           <div className="px-2.5 py-3 border bg-white rounded-lg mb-8">
-            <InfoBox 
-              title="Quick Start" 
-              subtitle="Upload your existing resume (PDF/DOCX) and let AI auto-fill your profile fields." 
-              icon={CloudUpload} 
+            <InfoBox
+              title="Quick Start"
+              subtitle="Upload your existing resume (PDF/DOCX) and let AI auto-fill your profile fields."
+              icon={CloudUpload}
               btn1="Upload Resume"
             />
           </div>
-          
+
           <div className="px-4 border bg-white rounded-lg mb-8">
             <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
@@ -116,75 +217,75 @@ export default function Profile() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {activeTab === "Profile View" && (
               <>
-                <ProfileCards 
-                  left_text="Basic Details" 
-                  right_text="Add" 
-                  icon={Lightbulb} 
-                  text="basic details" 
-                  btnText="Basic details" 
+                <ProfileCards
+                  left_text="Basic Details"
+                  right_text="Add"
+                  icon={Lightbulb}
+                  text="basic details"
+                  btnText="Basic details"
                   onAddClick={openBasicDetailsForm}
                   data={profileData.basicDetails}
                 />
-                <ProfileCards 
-                  left_text="Education" 
-                  right_text="Add" 
-                  icon={Lightbulb} 
-                  text="education" 
-                  btnText="Education" 
+                <ProfileCards
+                  left_text="Education"
+                  right_text="Add"
+                  icon={Lightbulb}
+                  text="education"
+                  btnText="Education"
                   onAddClick={openEducationForm}
                   data={profileData.education}
                 />
-                <ProfileCards 
-                  left_text="Work Experience" 
-                  right_text="Add" 
-                  icon={Briefcase} 
-                  text="work experience" 
-                  btnText="Experience" 
+                <ProfileCards
+                  left_text="Work Experience"
+                  right_text="Add"
+                  icon={Briefcase}
+                  text="work experience"
+                  btnText="Experience"
                   onAddClick={openExperienceForm}
                   data={profileData.experience}
                 />
-                <ProfileCards 
-                  left_text="Projects" 
-                  right_text="Add" 
-                  icon={Code2} 
-                  text="projects" 
-                  btnText="Projects" 
+                <ProfileCards
+                  left_text="Projects"
+                  right_text="Add"
+                  icon={Code2}
+                  text="projects"
+                  btnText="Projects"
                   onAddClick={openProjectsForm}
                   data={profileData.projects}
                 />
-                <ProfileCards 
-                  left_text="Skills" 
-                  right_text="Add" 
-                  icon={Lightbulb} 
-                  text="skills" 
-                  btnText="Skills" 
+                <ProfileCards
+                  left_text="Skills"
+                  right_text="Add"
+                  icon={Lightbulb}
+                  text="skills"
+                  btnText="Skills"
                   onAddClick={openSkillsForm}
                   data={profileData.skills}
                 />
-                <ProfileCards 
-                  left_text="Languages" 
-                  right_text="Add" 
-                  icon={Languages} 
-                  text="languages" 
-                  btnText="Languages" 
+                <ProfileCards
+                  left_text="Languages"
+                  right_text="Add"
+                  icon={Languages}
+                  text="languages"
+                  btnText="Languages"
                   onAddClick={openLanguagesForm}
                   data={profileData.languages}
                 />
-                <ProfileCards 
-                  left_text="Certifications" 
-                  right_text="Add" 
-                  icon={FileBadge} 
-                  text="certifications" 
-                  btnText="Certificates" 
+                <ProfileCards
+                  left_text="Certifications"
+                  right_text="Add"
+                  icon={FileBadge}
+                  text="certifications"
+                  btnText="Certificates"
                   onAddClick={openCertificationsForm}
                   data={profileData.certifications}
                 />
-                <ProfileCards 
-                  left_text="Links & Social" 
-                  right_text="Add" 
-                  icon={Link2} 
-                  text="links" 
-                  btnText="Links" 
+                <ProfileCards
+                  left_text="Links & Social"
+                  right_text="Add"
+                  icon={Link2}
+                  text="links"
+                  btnText="Links"
                   onAddClick={openLinksForm}
                   data={profileData.links}
                 />
@@ -192,72 +293,72 @@ export default function Profile() {
             )}
 
             {activeTab === "Education" && (
-              <ProfileCards 
-                left_text="Education" 
-                right_text="Add" 
-                icon={Lightbulb} 
-                text="education" 
-                btnText="Education" 
+              <ProfileCards
+                left_text="Education"
+                right_text="Add"
+                icon={Lightbulb}
+                text="education"
+                btnText="Education"
                 onAddClick={openEducationForm}
                 data={profileData.education}
               />
             )}
 
             {activeTab === "Work Experience" && (
-              <ProfileCards 
-                left_text="Work Experience" 
-                right_text="Add" 
-                icon={Briefcase} 
-                text="work experience" 
-                btnText="Experience" 
+              <ProfileCards
+                left_text="Work Experience"
+                right_text="Add"
+                icon={Briefcase}
+                text="work experience"
+                btnText="Experience"
                 onAddClick={openExperienceForm}
                 data={profileData.experience}
               />
             )}
 
             {activeTab === "Projects" && (
-              <ProfileCards 
-                left_text="Projects" 
-                right_text="Add" 
-                icon={Code2} 
-                text="projects" 
-                btnText="Projects" 
+              <ProfileCards
+                left_text="Projects"
+                right_text="Add"
+                icon={Code2}
+                text="projects"
+                btnText="Projects"
                 onAddClick={openProjectsForm}
                 data={profileData.projects}
               />
             )}
 
             {activeTab === "Languages" && (
-              <ProfileCards 
-                left_text="Languages" 
-                right_text="Add" 
-                icon={Languages} 
-                text="languages" 
-                btnText="Languages" 
+              <ProfileCards
+                left_text="Languages"
+                right_text="Add"
+                icon={Languages}
+                text="languages"
+                btnText="Languages"
                 onAddClick={openLanguagesForm}
                 data={profileData.languages}
               />
             )}
 
             {activeTab === "Certifications" && (
-              <ProfileCards 
-                left_text="Certifications" 
-                right_text="Add" 
-                icon={FileBadge} 
-                text="certifications" 
-                btnText="Certificates" 
+              <ProfileCards
+                left_text="Certifications"
+                right_text="Add"
+                icon={FileBadge}
+                text="certifications"
+                btnText="Certificates"
                 onAddClick={openCertificationsForm}
                 data={profileData.certifications}
               />
             )}
 
             {activeTab === "Links" && (
-              <ProfileCards 
-                left_text="Links & Social" 
-                right_text="Add" 
-                icon={Link2} 
-                text="links" 
-                btnText="Links" 
+              <ProfileCards
+                left_text="Links & Social"
+                right_text="Add"
+                icon={Link2}
+                text="links"
+                btnText="Links"
                 onAddClick={openLinksForm}
                 data={profileData.links}
               />
