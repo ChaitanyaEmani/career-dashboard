@@ -102,7 +102,6 @@ interface Link {
   url: string;
 }
 
-
 type FormDataType =
   | BasicDetails
   | Education
@@ -140,6 +139,12 @@ export default function Profile() {
     certifications: [],
     links: [],
   });
+
+  const [editData, setEditData] = useState<{
+    section: FormType | null;
+    data: FormDataType | null;
+    index: number | null;
+  }>({ section: null, data: null, index: null });
 
   const handleFormSubmit = (formType: FormType, data: FormDataType) => {
     setProfileData((prev) => {
@@ -219,12 +224,20 @@ export default function Profile() {
               <>
                 <ProfileCards
                   left_text="Basic Details"
-                  right_text="Add"
+                  right_text="Edit"
                   icon={Lightbulb}
                   text="basic details"
                   btnText="Basic details"
                   onAddClick={openBasicDetailsForm}
                   data={profileData.basicDetails}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Education"
@@ -234,6 +247,14 @@ export default function Profile() {
                   btnText="Education"
                   onAddClick={openEducationForm}
                   data={profileData.education}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Work Experience"
@@ -243,6 +264,14 @@ export default function Profile() {
                   btnText="Experience"
                   onAddClick={openExperienceForm}
                   data={profileData.experience}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Projects"
@@ -252,6 +281,14 @@ export default function Profile() {
                   btnText="Projects"
                   onAddClick={openProjectsForm}
                   data={profileData.projects}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Skills"
@@ -261,6 +298,14 @@ export default function Profile() {
                   btnText="Skills"
                   onAddClick={openSkillsForm}
                   data={profileData.skills}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Languages"
@@ -270,6 +315,14 @@ export default function Profile() {
                   btnText="Languages"
                   onAddClick={openLanguagesForm}
                   data={profileData.languages}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Certifications"
@@ -279,6 +332,14 @@ export default function Profile() {
                   btnText="Certificates"
                   onAddClick={openCertificationsForm}
                   data={profileData.certifications}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
                 <ProfileCards
                   left_text="Links & Social"
@@ -288,6 +349,14 @@ export default function Profile() {
                   btnText="Links"
                   onAddClick={openLinksForm}
                   data={profileData.links}
+                  onEditClick={(item, section, index) => {
+                    setEditData({
+                      section: section as FormType,
+                      data: item,
+                      index,
+                    });
+                    setOpenForm(section as FormType);
+                  }}
                 />
               </>
             )}
@@ -301,6 +370,14 @@ export default function Profile() {
                 btnText="Education"
                 onAddClick={openEducationForm}
                 data={profileData.education}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
 
@@ -313,6 +390,14 @@ export default function Profile() {
                 btnText="Experience"
                 onAddClick={openExperienceForm}
                 data={profileData.experience}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
 
@@ -325,6 +410,14 @@ export default function Profile() {
                 btnText="Projects"
                 onAddClick={openProjectsForm}
                 data={profileData.projects}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
 
@@ -337,6 +430,14 @@ export default function Profile() {
                 btnText="Languages"
                 onAddClick={openLanguagesForm}
                 data={profileData.languages}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
 
@@ -349,6 +450,14 @@ export default function Profile() {
                 btnText="Certificates"
                 onAddClick={openCertificationsForm}
                 data={profileData.certifications}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
 
@@ -361,6 +470,14 @@ export default function Profile() {
                 btnText="Links"
                 onAddClick={openLinksForm}
                 data={profileData.links}
+                onEditClick={(item, section, index) => {
+                  setEditData({
+                    section: section as FormType,
+                    data: item,
+                    index,
+                  });
+                  setOpenForm(section as FormType);
+                }}
               />
             )}
           </div>
