@@ -28,7 +28,7 @@ import {
 
 // Define the union type for data that can be passed to ProfileCards
 type ProfileCardData = BasicDetails | Education[] | Experience[] | Project[] | Skill[] | Language[] | Certification[] | Link[];
-
+type EditableItem = BasicDetails | Education | Experience | Project | Skill | Language | Certification | Link;
 interface ProfileCardsProps {
   left_text: string;
   right_text: string;
@@ -37,7 +37,7 @@ interface ProfileCardsProps {
   btnText: string;
   onAddClick: () => void;
   data?: ProfileCardData;
-  onEditClick?: (item: any, section: string, index: number) => void;
+  onEditClick?: (item: EditableItem, section: string, index: number) => void;
 }
 
 const platformIcons: { [key: string]: LucideIcon } = {
