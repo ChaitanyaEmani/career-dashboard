@@ -337,7 +337,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                 <div className="space-y-4">
                   {/* Technical Skills */}
                   {technicalSkills.length > 0 && (
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <p className="text-sm font-semibold text-gray-800 mb-1">
                         Technical Skills
                       </p>
@@ -363,7 +363,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
 
                   {/* Soft Skills */}
                   {softSkills.length > 0 && (
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <p className="text-sm font-semibold text-gray-800 mb-1">
                         Soft Skills
                       </p>
@@ -442,24 +442,25 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
             (data as Link[]).map((link, idx) => {
               const platformKey = link.platform?.toLowerCase() || "link";
               const IconComponent = platformIcons[platformKey] || LinkIcon;
-
               return (
                 <a
                   key={idx}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 cursor-pointer mb-2 text-gray-700 hover:underline"
+                  className="flex items-center gap-2 cursor-pointer m-2 text-gray-700 "
                   onClick={() => {
                     handleSetActive("links", idx);
                     onEditClick?.(link, "links", idx);
                   }}
                 >
                   <IconComponent
-                    size={28}
-                    className="text-white bg-gray-400 p-1 rounded-xl"
+                    size={34}
+                    className="text-white font-bold bg-gray-600 p-2 rounded-xl"
                   />
-                  <span>{link.platform || link.url}</span>
+                  <span>{link.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}</span>
+
+
                 </a>
               );
             })}
