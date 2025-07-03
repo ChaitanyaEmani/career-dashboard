@@ -1,7 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { LucideIcon } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import {
+  Github,
+  LinkedinIcon,
+  TwitterIcon,
+  FacebookIcon,
+  InstagramIcon,
+  YoutubeIcon,
+  Mail,
+  Globe,
+  Link as LinkIcon,
+  LucideIcon,
+} from "lucide-react";
 
 interface BasicDetails {
   firstName?: string;
@@ -37,8 +48,10 @@ interface Project {
   githubUrl?: string;
 }
 
-type Skill = string | { name?: string };
-
+interface Skill {
+  skillName: string;
+  category: string;
+}
 interface Language {
   language?: string;
   proficiency?: string;
@@ -47,7 +60,9 @@ interface Language {
 interface Certification {
   name?: string;
   issuer?: string;
+  issueDate?: string;
   abstract?: string;
+  doiUrl?: string;
 }
 
 interface Link {
@@ -76,6 +91,20 @@ interface ProfileCardsProps {
   onEditClick?: (item: any, section: string, index: number) => void;
 }
 
+const platformIcons: { [key: string]: LucideIcon } = {
+  github: Github,
+  linkedin: LinkedinIcon,
+  twitter: TwitterIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  youtube: YoutubeIcon,
+  email: Mail,
+  portfolio: Globe,
+  website: Globe,
+  personal: Globe,
+  link: LinkIcon, // default/fallback
+};
+
 const ProfileCards: React.FC<ProfileCardsProps> = ({
   left_text,
   right_text,
@@ -86,24 +115,57 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
   data,
   onEditClick,
 }) => {
-  const isDataEmpty =
-    !data ||
-    (Array.isArray(data) && data.length === 0) ||
-    (typeof data === "object" &&
-      !Array.isArray(data) &&
-      Object.keys(data).length === 0);
+  const isDataEmpty = useMemo(() => {
+    if (!data) return true;
+    if (Array.isArray(data)) return data.length === 0;
+    if (typeof data === "object") {
+      return Object.values(data).every(
+        (val) => val === undefined || val === "" || val === null
+      );
+    }
+    return false;
+  }, [data]);
 
   const [activeIndices, setActiveIndices] = useState<{ [key: string]: number }>(
     {
       education: 0,
       "work experience": 0,
       certifications: 0,
+      projects: 0,
+      skills: 0,
+      links: 0,
+      languages: 0,
     }
   );
 
   const handleSetActive = (section: string, index: number) => {
     setActiveIndices((prev) => ({ ...prev, [section]: index }));
   };
+
+  const techColors: string[] = [
+    "bg-blue-100 text-blue-800",
+    "bg-green-100 text-green-800",
+    "bg-yellow-100 text-yellow-800",
+    "bg-purple-100 text-purple-800",
+    "bg-pink-100 text-pink-800",
+    "bg-indigo-100 text-indigo-800",
+    "bg-red-100 text-red-800",
+    "bg-teal-100 text-teal-800",
+    "bg-orange-100 text-orange-800",
+    "bg-violet-100 text-violet-800",
+    "bg-gray-100 text-gray-800",
+    "bg-amber-100 text-amber-800",
+    "bg-lime-100 text-lime-800",
+    "bg-emerald-100 text-emerald-800",
+    "bg-cyan-100 text-cyan-800",
+    "bg-sky-100 text-sky-800",
+    "bg-fuchsia-100 text-fuchsia-800",
+    "bg-rose-100 text-rose-800",
+  ];
+
+  // Function to pick a random color
+  const getRandomColor = () =>
+    techColors[Math.floor(Math.random() * techColors.length)];
 
   return (
     <div className="flex flex-col p-4 border bg-white rounded-lg shadow-sm">
@@ -131,43 +193,62 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
       ) : (
         <div className="mt-2 text-gray-700">
           {/* Basic Details */}
-          {text === "basic details" && data && !Array.isArray(data) && (
-            <div className="flex flex-col gap-3">
-              <div className="flex items-start gap-4">
-                <div className="w-21 h-21 text-3xl rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
-                  {((data as BasicDetails).firstName?.charAt(0) || "") +
-                    ((data as BasicDetails).lastName?.charAt(0) || "")}
-                </div>
-                <div className="flex flex-col text-gray-800">
-                  <p className="text-lg font-semibold text-gray-900">
-                    {(data as BasicDetails).firstName}{" "}
-                    {(data as BasicDetails).lastName}
-                  </p>
+          {text === "basic details" &&
+            !Array.isArray(data) &&
+            (() => {
+              const defaultBasicDetails: BasicDetails = {
+                firstName: "John",
+                lastName: "Doe",
+                phone: "123-456-7890",
+                bio: "Passionate web developer with 3+ years of experience.",
+                email: "john.doe@example.com",
+                professionalTitle: "Frontend Developer",
+                location: "Hyderabad, India",
+              };
 
-                  <p className="text-lg text-gray-500">
-                    {(data as BasicDetails).professionalTitle}
-                  </p>
-                  <p className="text-lg text-gray-500">
-                    {(data as BasicDetails).location}
-                  </p>
+              const basicDetails: BasicDetails = {
+                ...defaultBasicDetails,
+                ...(data as BasicDetails),
+              };
+
+              return (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-start gap-4">
+                    <div className="w-21 h-21 text-3xl rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
+                      {`${basicDetails.firstName?.charAt(0) ?? ""}${
+                        basicDetails.lastName?.charAt(0) ?? ""
+                      }`}
+                    </div>
+                    <div className="flex flex-col text-gray-800">
+                      <p className="text-lg font-semibold text-gray-900">
+                        {basicDetails.firstName} {basicDetails.lastName}
+                      </p>
+                      <p className="text-lg text-gray-500">
+                        {basicDetails.professionalTitle}
+                      </p>
+                      <p className="text-lg text-gray-500">
+                        {basicDetails.location}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className="text-md flex flex-col text-gray-700 min-w-[180px] ">
+                      <span className="text-gray-400">Email:</span>{" "}
+                      {basicDetails.email}
+                    </p>
+                    <p className="text-md flex flex-col text-gray-700 min-w-[180px]">
+                      <span className="text-gray-400">Phone:</span>{" "}
+                      {basicDetails.phone}
+                    </p>
+                  </div>
+                  {basicDetails.bio && (
+                    <p className="mt-1 text-sm bg-gray-200 p-2 rounded-sm text-gray-700">
+                      {basicDetails.bio}
+                    </p>
+                  )}
                 </div>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-md flex flex-col text-gray-700 min-w-[180px] ">
-                  <span className="text-gray-400">Email:</span> {(data as BasicDetails).email}
-                </p>
-                <p className="text-md flex flex-col text-gray-700 min-w-[180px]">
-                  <span className="text-gray-400">Phone:</span>  {(data as BasicDetails).phone}
-                </p>
-                
-              </div>
-              {(data as BasicDetails).bio && (
-                  <p className="mt-1 text-sm bg-gray-200 p-2 rounded-sm text-gray-700">
-                    {(data as BasicDetails).bio}
-                  </p>
-                )}
-            </div>
-          )}
+              );
+            })()}
 
           {/* Education */}
           {text === "education" &&
@@ -184,7 +265,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
               return (
                 <div
                   key={idx}
-                  className="flex items-start space-x-3 relative pl-3 pb-4 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                  className="flex items-start space-x-3 relative pl-3 mb-5 cursor-pointer"
                   onClick={() => {
                     handleSetActive("education", idx);
                     onEditClick?.(edu, "education", idx);
@@ -200,13 +281,13 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       {edu.degree}
                     </p>
                     <p className="text-sm text-gray-600">{edu.institution}</p>
-                    <p className="text-sm text-gray-500 flex gap-2">
+                    <div className="text-sm text-gray-500 flex gap-2">
                       {startYear} - {endYear}
                       <div className="flex gap-2">
                         <div className="bg-gray-500 w-1.5 h-1.5 mt-2 rounded-lg"></div>
                         {edu.grade ? ` GPA: ${edu.grade}` : ""}
                       </div>
-                    </p>
+                    </div>
                   </div>
                 </div>
               );
@@ -227,7 +308,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
               return (
                 <div
                   key={idx}
-                  className="flex items-start space-x-3 relative pl-3 pb-4 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                  className="flex items-start space-x-3 relative pl-3 mb-5 cursor-pointer"
                   onClick={() => {
                     handleSetActive("work experience", idx);
                     onEditClick?.(exp, "work experience", idx);
@@ -258,20 +339,33 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
           {text === "projects" &&
             Array.isArray(data) &&
             (data as Project[]).map((proj, idx) => (
-              <div key={idx} className="space-y-1">
+              <div
+                key={idx}
+                className="space-y-2 mb-4 border border-gray-200 p-3 rounded-md cursor-pointer"
+                onClick={() => {
+                  handleSetActive("projects", idx);
+                  onEditClick?.(proj, "projects", idx);
+                }}
+              >
                 <p className="font-semibold text-gray-900">{proj.name}</p>
                 {proj.technologies && (
                   <div className="flex flex-wrap gap-1 text-xs">
-                    {proj.technologies.split(",").map((tech, i) => (
-                      <span
-                        key={i}
-                        className="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full"
-                      >
-                        {tech.trim()}
-                      </span>
-                    ))}
+                    {proj.technologies.split(",").map((tech, i) => {
+                      // Assign a random color once per render using useMemo
+                      const colorClass = getRandomColor();
+
+                      return (
+                        <span
+                          key={i}
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${colorClass}`}
+                        >
+                          {tech.trim()}
+                        </span>
+                      );
+                    })}
                   </div>
                 )}
+
                 {proj.description && (
                   <p className="text-sm">{proj.description}</p>
                 )}
@@ -280,7 +374,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                     <a
                       href={proj.projectUrl}
                       target="_blank"
-                      className="text-green-700 underline"
+                      className="text-green-800 font-medium"
                     >
                       Live Demo
                     </a>
@@ -289,7 +383,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                     <a
                       href={proj.githubUrl}
                       target="_blank"
-                      className="text-green-700 underline"
+                      className="text-green-800 font-medium"
                     >
                       GitHub
                     </a>
@@ -299,40 +393,107 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
             ))}
 
           {/* Skills */}
-          {text === "skills" && Array.isArray(data) && (
-            <div className="flex flex-wrap gap-2">
-              {(data as Skill[]).map((skill, idx) => (
-                <span
-                  key={idx}
-                  className="inline-block bg-gray-100 text-gray-800 px-3 py-1 text-xs rounded-full"
-                >
-                  {typeof skill === "string" ? skill : skill.name || "Skill"}
-                </span>
-              ))}
-            </div>
-          )}
+          {text === "skills" &&
+            Array.isArray(data) &&
+            (() => {
+              const skillsArray = data as Skill[];
+
+              const technicalSkills = skillsArray.filter(
+                (skill) => skill.category.toLowerCase() !== "soft skills"
+              );
+
+              const softSkills = skillsArray.filter(
+                (skill) => skill.category.toLowerCase() === "soft skills"
+              );
+
+              return (
+                <div className="space-y-4">
+                  {/* Technical Skills */}
+                  {technicalSkills.length > 0 && (
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800 mb-1">
+                        Technical Skills
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {technicalSkills.map((skill, idx) => {
+                          const colorClass = getRandomColor();
+                          return (
+                            <span
+                              key={`tech-${idx}`}
+                              className={`inline-block px-3 py-1 text-xs cursor-pointer rounded-full font-medium ${colorClass}`}
+                              onClick={() => {
+                                handleSetActive("skills", idx);
+                                onEditClick?.(skill, "skills", idx);
+                              }}
+                            >
+                              {skill.skillName}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Soft Skills */}
+                  {softSkills.length > 0 && (
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800 mb-1">
+                        Soft Skills
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {softSkills.map((skill, idx) => (
+                          <span
+                            key={`soft-${idx}`}
+                            className="inline-block bg-gray-200 cursor-pointer text-gray-800 px-3 py-1 text-xs rounded-full font-medium"
+                            onClick={() => {
+                              handleSetActive("skills", idx);
+                              onEditClick?.(skill, "skills", idx);
+                            }}
+                          >
+                            {skill.skillName}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
           {/* Languages */}
           {text === "languages" &&
             Array.isArray(data) &&
-            (data as Language[]).map((lang, idx) => (
-              <div key={idx} className="flex justify-between">
-                <p>{lang.language}</p>
-                <span className="text-xs text-white bg-green-600 px-2 py-0.5 rounded-full">
-                  {lang.proficiency}
-                </span>
-              </div>
-            ))}
+            (data as Language[]).map((lang, idx) => {
+              const colors = getRandomColor();
+              return (
+                <div
+                  key={idx}
+                  className="flex justify-between mb-3 cursor-pointer"
+                  onClick={() => {
+                    handleSetActive("languages", idx);
+                    onEditClick?.(lang, "languages", idx);
+                  }}
+                >
+                  <p>{lang.language}</p>
+                  <span className={`text-xs ${colors} px-3 py-1 rounded-full`}>
+                    {lang.proficiency}
+                  </span>
+                </div>
+              );
+            })}
 
           {/* Certifications */}
           {text === "certifications" &&
             Array.isArray(data) &&
             (data as Certification[]).map((cert, idx) => {
               const isActive = activeIndices["certifications"] === idx;
+              const year = cert.issueDate
+                ? new Date(cert.issueDate).getFullYear()
+                : "";
               return (
                 <div
                   key={idx}
-                  className="flex items-start space-x-3 relative pl-3 pb-4 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                  className="flex items-start space-x-3 relative pl-3 mb-5 cursor-pointer"
                   onClick={() => {
                     handleSetActive("certifications", idx);
                     onEditClick?.(cert, "certifications", idx);
@@ -344,29 +505,46 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                     }`}
                   ></div>
                   <div>
-                    <p className="font-semibold text-gray-900">{cert.name}</p>
+                    <p className="text-base font-semibold text-gray-900">
+                      {cert.name}
+                    </p>
                     <p className="text-sm text-gray-600">{cert.issuer}</p>
-                    {cert.abstract && (
-                      <p className="text-xs text-gray-500">{cert.abstract}</p>
-                    )}
+                    <p className="text-sm text-gray-500 flex gap-2"> {year}</p>
+                    <p>{cert.abstract}</p>
                   </div>
                 </div>
               );
             })}
 
           {/* Links */}
+          {/* Links */}
           {text === "links" &&
             Array.isArray(data) &&
-            (data as Link[]).map((link, idx) => (
-              <a
-                key={idx}
-                href={link.url}
-                target="_blank"
-                className="text-green-700 hover:underline block"
-              >
-                {link.platform || link.url}
-              </a>
-            ))}
+            (data as Link[]).map((link, idx) => {
+              const platformKey = link.platform?.toLowerCase() || "link";
+              const IconComponent = platformIcons[platformKey] || LinkIcon;
+
+              return (
+                <a
+                  key={idx}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 cursor-pointer mb-2 text-gray-700 hover:underline"
+                  onClick={() => {
+                  
+                    handleSetActive("links", idx);
+                    onEditClick?.(link, "links", idx);
+                  }}
+                >
+                  <IconComponent
+                    size={28}
+                    className="text-white bg-gray-400 p-1 rounded-xl"
+                  />
+                  <span>{link.platform || link.url}</span>
+                </a>
+              );
+            })}
         </div>
       )}
     </div>

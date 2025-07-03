@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import ProfileCards from "../components/ProfileCards";
@@ -47,6 +47,7 @@ interface BasicDetails {
   location: string;
   phone: string;
   bio: string;
+  email: string;
 }
 
 interface Education {
@@ -130,7 +131,15 @@ export default function Profile() {
   const [openForm, setOpenForm] = useState<FormType | null>(null);
 
   const [profileData, setProfileData] = useState<ProfileDataType>({
-    basicDetails: undefined,
+    basicDetails: {
+      firstName: "John",
+      lastName: "Doe",
+      phone: "123-456-7890",
+      bio: "Passionate web developer with 3+ years of experience.",
+      email: "john.doe@example.com",
+      professionalTitle: "Frontend Developer",
+      location: "Hyderabad, India",
+    },
     education: [],
     experience: [],
     projects: [],
@@ -139,6 +148,19 @@ export default function Profile() {
     certifications: [],
     links: [],
   });
+
+   
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("profileData");
+    if (storedProfile) {
+      setProfileData(JSON.parse(storedProfile));
+    }
+  }, []);
+
+  
+  useEffect(() => {
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+  }, [profileData]);
 
   const [editData, setEditData] = useState<{
     section: FormType | null;
@@ -185,6 +207,24 @@ export default function Profile() {
   const handleFormCancel = () => {
     setOpenForm(null);
   };
+
+  const calculateCompletion = () => {
+    let completed = 0;
+    const totalSections = 8; // total form sections considered for progress
+
+    if (profileData.basicDetails) completed++;
+    if (profileData.education.length > 0) completed++;
+    if (profileData.experience.length > 0) completed++;
+    if (profileData.projects.length > 0) completed++;
+    if (profileData.skills.length > 0) completed++;
+    if (profileData.languages.length > 0) completed++;
+    if (profileData.certifications.length > 0) completed++;
+    if (profileData.links.length > 0) completed++;
+
+    return Math.round((completed / totalSections) * 100);
+  };
+
+  const completion = useMemo(() => calculateCompletion(), [profileData]);
 
   // Form opening handlers
   const openBasicDetailsForm = () => setOpenForm("basicDetails");
@@ -485,8 +525,8 @@ export default function Profile() {
           <div className="border bg-white rounded-lg">
             <BarBox
               title="Profile Completion"
-              value="0%"
-              completionPercentage={0}
+              value={`${completion}%`}
+              completionPercentage={completion}
               buttonNames={[
                 "Basic Details",
                 "Education",
@@ -505,8 +545,14 @@ export default function Profile() {
         title="Add Basic Details"
       >
         <BasicDetailsForm
-          onSubmit={(data) => handleFormSubmit("basicDetails", data)}
+          onSubmit={(data) =>
+            handleFormSubmit("basicDetails", {
+              ...data,
+              email: profileData.basicDetails?.email || "",
+            })
+          }
           onCancel={handleFormCancel}
+          initialData={editData.section === "basicDetails" ? editData.data as BasicDetails : profileData.basicDetails}// Pass all details, including email
         />
       </FormModal>
 
@@ -518,6 +564,7 @@ export default function Profile() {
         <EducationForm
           onSubmit={(data) => handleFormSubmit("education", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "education" ? editData.data as Education : undefined}
         />
       </FormModal>
 
@@ -529,6 +576,7 @@ export default function Profile() {
         <ExperienceForm
           onSubmit={(data) => handleFormSubmit("experience", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "experience" ? editData.data as Experience : undefined}
         />
       </FormModal>
 
@@ -540,6 +588,7 @@ export default function Profile() {
         <ProjectsForm
           onSubmit={(data) => handleFormSubmit("projects", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "projects" ? editData.data as Project : undefined}
         />
       </FormModal>
 
@@ -551,6 +600,7 @@ export default function Profile() {
         <SkillsForm
           onSubmit={(data) => handleFormSubmit("skills", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "skills" ? editData.data as Skill : undefined}
         />
       </FormModal>
 
@@ -562,6 +612,7 @@ export default function Profile() {
         <LanguagesForm
           onSubmit={(data) => handleFormSubmit("languages", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "languages" ? editData.data as Language : undefined}
         />
       </FormModal>
 
@@ -573,6 +624,7 @@ export default function Profile() {
         <CertificationsForm
           onSubmit={(data) => handleFormSubmit("certifications", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "certifications" ? editData.data as Certification : undefined}
         />
       </FormModal>
 
@@ -584,6 +636,7 @@ export default function Profile() {
         <LinksForm
           onSubmit={(data) => handleFormSubmit("links", data)}
           onCancel={handleFormCancel}
+           initialData={editData.section === "links" ? editData.data as Link : undefined}
         />
       </FormModal>
     </>
