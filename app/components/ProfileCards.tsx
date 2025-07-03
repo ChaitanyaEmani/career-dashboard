@@ -25,6 +25,7 @@ import {
   Certification, 
   Link 
 } from '../profile/page';
+import ProfileSectionCard from "./ProfileSectionCard";
 
 // Define the union type for data that can be passed to ProfileCards
 type ProfileCardData = BasicDetails | Education[] | Experience[] | Project[] | Skill[] | Language[] | Certification[] | Link[];
@@ -225,19 +226,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <div>
-                    <p className="text-base font-semibold text-gray-900">
-                      {edu.degree}
-                    </p>
-                    <p className="text-sm text-gray-600">{edu.institution}</p>
-                    <div className="text-sm text-gray-500 flex gap-2">
-                      {startYear} - {endYear}
-                      <div className="flex gap-2">
-                        <div className="bg-gray-500 w-1.5 h-1.5 mt-2 rounded-lg"></div>
-                        {edu.grade ? ` GPA: ${edu.grade}` : ""}
-                      </div>
-                    </div>
-                  </div>
+                  <ProfileSectionCard title={edu.degree} subtitle={edu.institution} startYear={Number(startYear)} endYear={Number(endYear)} category="education" grade={edu.grade} />
                 </div>
               );
             })}
@@ -259,8 +248,8 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                   key={idx}
                   className="flex items-start space-x-3 relative pl-3 mb-5 cursor-pointer"
                   onClick={() => {
-                    handleSetActive("work experience", idx);
-                    onEditClick?.(exp, "work experience", idx);
+                    handleSetActive("experience", idx);
+                    onEditClick?.(exp, "experience", idx);
                   }}
                 >
                   <div
@@ -268,18 +257,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      {exp.jobTitle}
-                    </p>
-                    <p className="text-sm">{exp.company}</p>
-                    <p className="text-xs text-gray-500">
-                      {startYear} - {endYear}
-                    </p>
-                    {exp.task && (
-                      <p className="text-sm text-gray-700 mt-1">{exp.task}</p>
-                    )}
-                  </div>
+                  <ProfileSectionCard title={exp.jobTitle} category="experience" subtitle={exp.company} startYear={Number(startYear)} endYear={Number(endYear)} desc={exp.task} />
                 </div>
               );
             })}
@@ -436,7 +414,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
             Array.isArray(data) &&
             (data as Certification[]).map((cert, idx) => {
               const isActive = activeIndices["certifications"] === idx;
-              const year = cert.issueDate
+              const startYear = cert.issueDate
                 ? new Date(cert.issueDate).getFullYear()
                 : "";
               return (
@@ -453,14 +431,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <div>
-                    <p className="text-base font-semibold text-gray-900">
-                      {cert.name}
-                    </p>
-                    <p className="text-sm text-gray-600">{cert.issuer}</p>
-                    <p className="text-sm text-gray-500 flex gap-2"> {year}</p>
-                    <p>{cert.abstract}</p>
-                  </div>
+                  <ProfileSectionCard title={cert.name} subtitle={cert.issuer} category="certification" startYear={Number(startYear)} desc={cert.abstract} />
                 </div>
               );
             })}
