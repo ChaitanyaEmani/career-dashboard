@@ -224,7 +224,7 @@ export default function Profile() {
     return Math.round((completed / totalSections) * 100);
   };
 
-  const completion = useMemo(() => calculateCompletion(), [profileData]);
+  const completion = useMemo(() => calculateCompletion(), [calculateCompletion]);
 
   // Form opening handlers
   const openBasicDetailsForm = () => setOpenForm("basicDetails");
