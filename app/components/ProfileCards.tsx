@@ -14,71 +14,20 @@ import {
   LucideIcon,
 } from "lucide-react";
 
-interface BasicDetails {
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  bio?: string;
-  email?: string;
-  professionalTitle?: string;
-  location?: string;
-}
+// Import types from parent component
+import { 
+  BasicDetails, 
+  Education, 
+  Experience, 
+  Project, 
+  Skill, 
+  Language, 
+  Certification, 
+  Link 
+} from '../profile/page';
 
-interface Education {
-  degree?: string;
-  institution?: string;
-  startDate?: string;
-  endDate?: string;
-  grade?: string;
-}
-
-interface WorkExperience {
-  jobTitle?: string;
-  company?: string;
-  startDate?: string;
-  endDate?: string;
-  task?: string;
-}
-
-interface Project {
-  name?: string;
-  description?: string;
-  technologies?: string;
-  projectUrl?: string;
-  githubUrl?: string;
-}
-
-interface Skill {
-  skillName: string;
-  category: string;
-}
-interface Language {
-  language?: string;
-  proficiency?: string;
-}
-
-interface Certification {
-  name?: string;
-  issuer?: string;
-  issueDate?: string;
-  abstract?: string;
-  doiUrl?: string;
-}
-
-interface Link {
-  platform?: string;
-  url?: string;
-}
-
-type ProfileData =
-  | BasicDetails
-  | Education[]
-  | WorkExperience[]
-  | Project[]
-  | Skill[]
-  | Language[]
-  | Certification[]
-  | Link[];
+// Define the union type for data that can be passed to ProfileCards
+type ProfileCardData = BasicDetails | Education[] | Experience[] | Project[] | Skill[] | Language[] | Certification[] | Link[];
 
 interface ProfileCardsProps {
   left_text: string;
@@ -87,7 +36,7 @@ interface ProfileCardsProps {
   text: string;
   btnText: string;
   onAddClick: () => void;
-  data?: ProfileData;
+  data?: ProfileCardData;
   onEditClick?: (item: any, section: string, index: number) => void;
 }
 
@@ -296,7 +245,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
           {/* Work Experience */}
           {text === "work experience" &&
             Array.isArray(data) &&
-            (data as WorkExperience[]).map((exp, idx) => {
+            (data as Experience[]).map((exp, idx) => {
               const startYear = exp.startDate
                 ? new Date(exp.startDate).getFullYear()
                 : "";
@@ -517,7 +466,6 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
             })}
 
           {/* Links */}
-          {/* Links */}
           {text === "links" &&
             Array.isArray(data) &&
             (data as Link[]).map((link, idx) => {
@@ -532,7 +480,6 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 cursor-pointer mb-2 text-gray-700 hover:underline"
                   onClick={() => {
-                  
                     handleSetActive("links", idx);
                     onEditClick?.(link, "links", idx);
                   }}

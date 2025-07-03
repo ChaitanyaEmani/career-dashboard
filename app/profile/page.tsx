@@ -124,6 +124,8 @@ interface ProfileDataType {
   links: Link[];
 }
 
+export type { FormType, BasicDetails, Education, Experience, Project, Skill, Language, Certification, Link, FormDataType, ProfileDataType };
+
 // ---------- Component ----------
 
 export default function Profile() {
@@ -208,23 +210,21 @@ export default function Profile() {
     setOpenForm(null);
   };
 
-  const calculateCompletion = () => {
-    let completed = 0;
-    const totalSections = 8; // total form sections considered for progress
+ const completion = useMemo(() => {
+  let completed = 0;
+  const totalSections = 8; // total form sections considered for progress
 
-    if (profileData.basicDetails) completed++;
-    if (profileData.education.length > 0) completed++;
-    if (profileData.experience.length > 0) completed++;
-    if (profileData.projects.length > 0) completed++;
-    if (profileData.skills.length > 0) completed++;
-    if (profileData.languages.length > 0) completed++;
-    if (profileData.certifications.length > 0) completed++;
-    if (profileData.links.length > 0) completed++;
+  if (profileData.basicDetails) completed++;
+  if (profileData.education.length > 0) completed++;
+  if (profileData.experience.length > 0) completed++;
+  if (profileData.projects.length > 0) completed++;
+  if (profileData.skills.length > 0) completed++;
+  if (profileData.languages.length > 0) completed++;
+  if (profileData.certifications.length > 0) completed++;
+  if (profileData.links.length > 0) completed++;
 
-    return Math.round((completed / totalSections) * 100);
-  };
-
-  const completion = useMemo(() => calculateCompletion(), [profileData]);
+  return Math.round((completed / totalSections) * 100);
+}, [profileData]);
 
   // Form opening handlers
   const openBasicDetailsForm = () => setOpenForm("basicDetails");
