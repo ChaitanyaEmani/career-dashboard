@@ -13,7 +13,7 @@ interface StatsCardProps {
 
 const StatsCard: React.FC<StatsCardProps> = ({ title,subtitle, category, value, icon: Icon, bgColor, textColor}) => {
   return (
-    <div className={`flex ${category==="dashboard"?"flex-row justify-between":"flex-row-reverse items-center gap-1.5"}  items-center py-3.5 px-3 border-1 bg-white rounded-lg`}>
+    <div className={`flex ${category==="dashboard"?"justify-between":"flex-row-reverse justify-center gap-1"} py-3.5 px-3 border bg-white rounded-lg`}>
       <div className='flex flex-col'>
         <p className={`${category==="dashboard"?"text-gray-600 font-medium text-sm":"font-medium text-sm"}`}>{title}</p>
         {value && <p className="text-xl font-bold text-gray-900">{value}</p>}
