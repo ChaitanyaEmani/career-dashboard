@@ -3,7 +3,7 @@ import React from "react";
 type ActivityItemProps = {
   title: string;
   time: string;
-  color?: "blue" | "green" | "purple" | "orange" | "gray" | "red";
+  color?: "blue" | "green" | "purple" | "orange" | "gray" | "red" | "yellow";
 };
 
 const ActivityItem: React.FC<ActivityItemProps> = ({
@@ -22,6 +22,8 @@ const ActivityItem: React.FC<ActivityItemProps> = ({
       ? "bg-orange-500"
       : color === "red"
       ? "bg-red-500"
+      : color==="yellow"
+      ? "bg-yellow-500"
       : "bg-gray-500";
 
   return (

@@ -1,13 +1,17 @@
 import React from "react";
 
 interface ProfileSectionCardProps {
-  category: "education" | "experience" | "certification";
+  category:
+    | "education"
+    | "experience"
+    | "certification";
   title: string;
   subtitle: string;
   startYear?: number;
   endYear?: number;
   grade?: string;
   desc?: string;
+  
 }
 
 const ProfileSectionCard: React.FC<ProfileSectionCardProps> = ({
@@ -18,13 +22,16 @@ const ProfileSectionCard: React.FC<ProfileSectionCardProps> = ({
   endYear,
   grade,
   desc,
+  
 }) => {
   const renderDetails = () => {
     switch (category) {
       case "education":
         return (
           <div className="text-sm text-gray-500 flex gap-2">
-            <span>{startYear} - {endYear}</span>
+            <span>
+              {startYear} - {endYear}
+            </span>
             {grade && (
               <>
                 <div className="bg-gray-500 w-1.5 h-1.5 mt-2 rounded-full" />
@@ -36,7 +43,9 @@ const ProfileSectionCard: React.FC<ProfileSectionCardProps> = ({
       case "experience":
         return (
           <>
-            <p className="text-sm text-gray-500">{startYear} - {endYear}</p>
+            <p className="text-sm text-gray-500">
+              {startYear} - {endYear}
+            </p>
             {desc && <p className="text-sm text-gray-700 mt-1">{desc}</p>}
           </>
         );
@@ -47,6 +56,7 @@ const ProfileSectionCard: React.FC<ProfileSectionCardProps> = ({
             {desc && <p className="text-sm text-gray-700 mt-1">{desc}</p>}
           </>
         );
+      
       default:
         return null;
     }

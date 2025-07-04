@@ -25,9 +25,9 @@ import {
   Code2,
 } from "lucide-react";
 import BarBox from "../components/commonComponents/BarBox";
-import InfoBox from "../components/InfoBox";
+import InfoBox from "../components/commonComponents/InfoBox";
 import TabNavigation from "../components/TabNavigation";
-
+import UploadResume from "../components/profileComponents/UploadResume";
 // ---------- Types ----------
 
 type FormType =
@@ -235,6 +235,7 @@ export default function Profile() {
   const openLanguagesForm = () => setOpenForm("languages");
   const openCertificationsForm = () => setOpenForm("certifications");
   const openLinksForm = () => setOpenForm("links");
+  const [showUpload, setShowUpload] = useState(false);
 
   return (
     <>
@@ -252,7 +253,10 @@ export default function Profile() {
               subtitle="Upload your existing resume (PDF/DOCX) and let AI auto-fill your profile fields."
               icon={CloudUpload}
               btn1="Upload Resume"
+              bgColor="bg-green-800"
+               btn1Click={() => setShowUpload(true)}
             />
+            {showUpload && <UploadResume onClose={() => setShowUpload(false)} />}
           </div>
 
           <div className="px-4 border bg-white rounded-lg mb-8">

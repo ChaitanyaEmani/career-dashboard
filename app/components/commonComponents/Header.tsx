@@ -6,9 +6,11 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ userName, text }) => {
+  
+  const capitalizedName = userName.split(" ").map(word=>word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">{userName}</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">{capitalizedName}</h1>
       {text && <p className="text-gray-600">{text}</p>}
     </div>
   );

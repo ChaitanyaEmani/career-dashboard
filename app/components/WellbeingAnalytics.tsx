@@ -6,7 +6,7 @@ import {
   Cell,
   Tooltip,
 } from "recharts";
-import ChartCard from "./ChartCard";
+
 
 interface WellbeingData {
   name: string;
@@ -19,11 +19,7 @@ interface WellbeingAnalyticsProps {
 }
 
 const WellbeingAnalytics: React.FC<WellbeingAnalyticsProps> = ({ data }) => (
-  <ChartCard
-    title="Wellbeing Analytics"
-    viewAllText="View Details"
-    onViewAll={() => console.log("View wellbeing details")}
-  >
+  <div>
     <div className="h-27.5 flex items-center justify-center">
       <ResponsiveContainer width="70%" height="90%">
         <PieChart>
@@ -77,7 +73,7 @@ const WellbeingAnalytics: React.FC<WellbeingAnalyticsProps> = ({ data }) => (
         <span className="font-medium text-green-600">Low</span>
       </div>
     </div>
-  </ChartCard>
+  </div>
 );
 
 export default WellbeingAnalytics;
