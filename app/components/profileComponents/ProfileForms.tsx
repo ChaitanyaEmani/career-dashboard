@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputCard, DateCard, DescCard, Button } from '../components/MultiInput';
+import { InputCard, DateCard, DescCard, Button } from './MultiInput';
 
 // Type definitions
 interface BasicDetailsData {

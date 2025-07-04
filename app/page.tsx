@@ -4,15 +4,15 @@ import React from "react";
 
 import { AlertTriangle, BookOpen, Mic, Plus, User, Heart, CircleCheck, CheckCircle } from "lucide-react";
 // Import all components
-import Header from "./components/Header";
-import StatsCard from "./components/StatsCard";
+import Header from "./components/commonComponents/Header";
+import StatsCard from "./components/commonComponents/StatsCard";
 import JobCard from "./components/JobCard";
 import ActivityItem from "./components/ActivityItem";
 import PortfolioItem from "./components/PortfolioItem";
 import ActionButton from "./components/ActionButton";
 import LearningAnalytics from "./components/LearningAnalytics";
 import WellbeingAnalytics from "./components/WellbeingAnalytics";
-import BarBox from "./components/BarBox";
+import BarBox from "./components/commonComponents/BarBox";
 // Import all data
 
 

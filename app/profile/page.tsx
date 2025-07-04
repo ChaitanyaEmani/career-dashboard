@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
-import ProfileCards from "../components/ProfileCards";
-import FormModal from "../components/FormModal";
+import Header from "../components/commonComponents/Header";
+import Sidebar from "../components/commonComponents/Sidebar";
+import ProfileCards from "../components/profileComponents/ProfileCards";
+import FormModal from "../components/profileComponents/FormModal";
 import {
   BasicDetailsForm,
   EducationForm,
@@ -14,7 +14,7 @@ import {
   LanguagesForm,
   CertificationsForm,
   LinksForm,
-} from "../components/ProfileForms";
+} from "../components/profileComponents/ProfileForms";
 import {
   Briefcase,
   CloudUpload,
@@ -24,7 +24,7 @@ import {
   FileBadge,
   Code2,
 } from "lucide-react";
-import BarBox from "../components/BarBox";
+import BarBox from "../components/commonComponents/BarBox";
 import InfoBox from "../components/InfoBox";
 import TabNavigation from "../components/TabNavigation";
 

@@ -15,21 +15,38 @@ import {
 } from "lucide-react";
 
 // Import types from parent component
-import { 
-  BasicDetails, 
-  Education, 
-  Experience, 
-  Project, 
-  Skill, 
-  Language, 
-  Certification, 
-  Link 
-} from '../profile/page';
+import {
+  BasicDetails,
+  Education,
+  Experience,
+  Project,
+  Skill,
+  Language,
+  Certification,
+  Link,
+} from "../../profile/page";
 import ProfileSectionCard from "./ProfileSectionCard";
+import { Linden_Hill } from "next/font/google";
 
 // Define the union type for data that can be passed to ProfileCards
-type ProfileCardData = BasicDetails | Education[] | Experience[] | Project[] | Skill[] | Language[] | Certification[] | Link[];
-type EditableItem = BasicDetails | Education | Experience | Project | Skill | Language | Certification | Link;
+type ProfileCardData =
+  | BasicDetails
+  | Education[]
+  | Experience[]
+  | Project[]
+  | Skill[]
+  | Language[]
+  | Certification[]
+  | Link[];
+type EditableItem =
+  | BasicDetails
+  | Education
+  | Experience
+  | Project
+  | Skill
+  | Language
+  | Certification
+  | Link;
 interface ProfileCardsProps {
   left_text: string;
   right_text: string;
@@ -226,7 +243,14 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <ProfileSectionCard title={edu.degree} subtitle={edu.institution} startYear={Number(startYear)} endYear={Number(endYear)} category="education" grade={edu.grade} />
+                  <ProfileSectionCard
+                    title={edu.degree}
+                    subtitle={edu.institution}
+                    startYear={Number(startYear)}
+                    endYear={Number(endYear)}
+                    category="education"
+                    grade={edu.grade}
+                  />
                 </div>
               );
             })}
@@ -257,7 +281,14 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <ProfileSectionCard title={exp.jobTitle} category="experience" subtitle={exp.company} startYear={Number(startYear)} endYear={Number(endYear)} desc={exp.task} />
+                  <ProfileSectionCard
+                    title={exp.jobTitle}
+                    category="experience"
+                    subtitle={exp.company}
+                    startYear={Number(startYear)}
+                    endYear={Number(endYear)}
+                    desc={exp.task}
+                  />
                 </div>
               );
             })}
@@ -431,7 +462,13 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       isActive ? "bg-green-700" : "bg-gray-300"
                     }`}
                   ></div>
-                  <ProfileSectionCard title={cert.name} subtitle={cert.issuer} category="certification" startYear={Number(startYear)} desc={cert.abstract} />
+                  <ProfileSectionCard
+                    title={cert.name}
+                    subtitle={cert.issuer}
+                    category="certification"
+                    startYear={Number(startYear)}
+                    desc={cert.abstract}
+                  />
                 </div>
               );
             })}
@@ -458,9 +495,7 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                     size={34}
                     className="text-white font-bold bg-gray-600 p-2 rounded-xl"
                   />
-                  <span>{link.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}</span>
-
-
+                  <span>{link.url.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
                 </a>
               );
             })}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UploadResume from "./UploadResume";
+import UploadResume from "./profileComponents/UploadResume";
 import { LucideIcon } from "lucide-react";
 
 interface InfoBoxProps {
