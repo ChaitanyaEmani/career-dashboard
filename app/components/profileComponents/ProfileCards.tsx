@@ -26,7 +26,6 @@ import {
   Link,
 } from "../../profile/page";
 import ProfileSectionCard from "./ProfileSectionCard";
-import { Linden_Hill } from "next/font/google";
 
 // Define the union type for data that can be passed to ProfileCards
 type ProfileCardData =
