@@ -197,12 +197,12 @@ const ProfileCards: React.FC<ProfileCardsProps> = ({
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-between">
-                    <p className="text-md flex flex-col text-gray-700 min-w-[180px] ">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-1 gap-6">
+                    <p className="col-span-1 text-md flex flex-col text-gray-700 min-w-[180px] ">
                       <span className="text-gray-400">Email:</span>{" "}
                       {basicDetails.email}
                     </p>
-                    <p className="text-md flex flex-col text-gray-700 min-w-[180px]">
+                    <p className="col-span-1 text-md flex flex-col text-gray-700 min-w-[180px]">
                       <span className="text-gray-400">Phone:</span>{" "}
                       {basicDetails.phone}
                     </p>

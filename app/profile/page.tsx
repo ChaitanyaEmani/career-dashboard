@@ -124,7 +124,19 @@ interface ProfileDataType {
   links: Link[];
 }
 
-export type { FormType, BasicDetails, Education, Experience, Project, Skill, Language, Certification, Link, FormDataType, ProfileDataType };
+export type {
+  FormType,
+  BasicDetails,
+  Education,
+  Experience,
+  Project,
+  Skill,
+  Language,
+  Certification,
+  Link,
+  FormDataType,
+  ProfileDataType,
+};
 
 // ---------- Component ----------
 
@@ -151,7 +163,6 @@ export default function Profile() {
     links: [],
   });
 
-   
   useEffect(() => {
     const storedProfile = localStorage.getItem("profileData");
     if (storedProfile) {
@@ -159,7 +170,6 @@ export default function Profile() {
     }
   }, []);
 
-  
   useEffect(() => {
     localStorage.setItem("profileData", JSON.stringify(profileData));
   }, [profileData]);
@@ -210,21 +220,21 @@ export default function Profile() {
     setOpenForm(null);
   };
 
- const completion = useMemo(() => {
-  let completed = 0;
-  const totalSections = 8; // total form sections considered for progress
+  const completion = useMemo(() => {
+    let completed = 0;
+    const totalSections = 8; // total form sections considered for progress
 
-  if (profileData.basicDetails) completed++;
-  if (profileData.education.length > 0) completed++;
-  if (profileData.experience.length > 0) completed++;
-  if (profileData.projects.length > 0) completed++;
-  if (profileData.skills.length > 0) completed++;
-  if (profileData.languages.length > 0) completed++;
-  if (profileData.certifications.length > 0) completed++;
-  if (profileData.links.length > 0) completed++;
+    if (profileData.basicDetails) completed++;
+    if (profileData.education.length > 0) completed++;
+    if (profileData.experience.length > 0) completed++;
+    if (profileData.projects.length > 0) completed++;
+    if (profileData.skills.length > 0) completed++;
+    if (profileData.languages.length > 0) completed++;
+    if (profileData.certifications.length > 0) completed++;
+    if (profileData.links.length > 0) completed++;
 
-  return Math.round((completed / totalSections) * 100);
-}, [profileData]);
+    return Math.round((completed / totalSections) * 100);
+  }, [profileData]);
 
   // Form opening handlers
   const openBasicDetailsForm = () => setOpenForm("basicDetails");
@@ -254,9 +264,11 @@ export default function Profile() {
               icon={CloudUpload}
               btn1="Upload Resume"
               bgColor="bg-green-800"
-               btn1Click={() => setShowUpload(true)}
+              btn1Click={() => setShowUpload(true)}
             />
-            {showUpload && <UploadResume onClose={() => setShowUpload(false)} />}
+            {showUpload && (
+              <UploadResume onClose={() => setShowUpload(false)} />
+            )}
           </div>
 
           <div className="px-4 border bg-white rounded-lg mb-8">
@@ -556,7 +568,11 @@ export default function Profile() {
             })
           }
           onCancel={handleFormCancel}
-          initialData={editData.section === "basicDetails" ? editData.data as BasicDetails : profileData.basicDetails}// Pass all details, including email
+          initialData={
+            editData.section === "basicDetails"
+              ? (editData.data as BasicDetails)
+              : profileData.basicDetails
+          } // Pass all details, including email
         />
       </FormModal>
 
@@ -568,7 +584,11 @@ export default function Profile() {
         <EducationForm
           onSubmit={(data) => handleFormSubmit("education", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "education" ? editData.data as Education : undefined}
+          initialData={
+            editData.section === "education"
+              ? (editData.data as Education)
+              : undefined
+          }
         />
       </FormModal>
 
@@ -580,7 +600,11 @@ export default function Profile() {
         <ExperienceForm
           onSubmit={(data) => handleFormSubmit("experience", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "experience" ? editData.data as Experience : undefined}
+          initialData={
+            editData.section === "experience"
+              ? (editData.data as Experience)
+              : undefined
+          }
         />
       </FormModal>
 
@@ -592,7 +616,11 @@ export default function Profile() {
         <ProjectsForm
           onSubmit={(data) => handleFormSubmit("projects", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "projects" ? editData.data as Project : undefined}
+          initialData={
+            editData.section === "projects"
+              ? (editData.data as Project)
+              : undefined
+          }
         />
       </FormModal>
 
@@ -604,7 +632,9 @@ export default function Profile() {
         <SkillsForm
           onSubmit={(data) => handleFormSubmit("skills", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "skills" ? editData.data as Skill : undefined}
+          initialData={
+            editData.section === "skills" ? (editData.data as Skill) : undefined
+          }
         />
       </FormModal>
 
@@ -616,7 +646,11 @@ export default function Profile() {
         <LanguagesForm
           onSubmit={(data) => handleFormSubmit("languages", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "languages" ? editData.data as Language : undefined}
+          initialData={
+            editData.section === "languages"
+              ? (editData.data as Language)
+              : undefined
+          }
         />
       </FormModal>
 
@@ -628,7 +662,11 @@ export default function Profile() {
         <CertificationsForm
           onSubmit={(data) => handleFormSubmit("certifications", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "certifications" ? editData.data as Certification : undefined}
+          initialData={
+            editData.section === "certifications"
+              ? (editData.data as Certification)
+              : undefined
+          }
         />
       </FormModal>
 
@@ -640,7 +678,9 @@ export default function Profile() {
         <LinksForm
           onSubmit={(data) => handleFormSubmit("links", data)}
           onCancel={handleFormCancel}
-           initialData={editData.section === "links" ? editData.data as Link : undefined}
+          initialData={
+            editData.section === "links" ? (editData.data as Link) : undefined
+          }
         />
       </FormModal>
     </>
