@@ -27,7 +27,7 @@ import ChartCard from "./components/commonComponents/ChartCard";
 
 const CareerDashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-50 sm:pt-10 pb-20 sm:pb-6 px-6">
+    <div className="min-h-screen bg-gray-50 pt-5 sm:pt-10 pb-20 sm:pb-6 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <Header
